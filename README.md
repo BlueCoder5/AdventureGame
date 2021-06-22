@@ -1,2 +1,3 @@
 # AdventureGame
-Text-based Adventure Game
+Basic Text-based Adventure Game
+First java project

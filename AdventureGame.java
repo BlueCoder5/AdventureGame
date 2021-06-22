@@ -2,26 +2,29 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class AdventureGame {
+    
     public static void main(String[] args) {
         // System objects
         Scanner in = new Scanner(System.in);
         Random rand = new Random();
         final int PERCENT = 100;
+        int score = 0;
         
-        // enemies
+        // Enemies
         String[] enemies = {"Skeleton", "Zombie", "Warrior", "Assassin", "Vampire", "Dragon", "Werewolf",
                             "Ghost", "Spider", "Mummy", "Snake"};
         int maxEnemyHealth = 100;
+        int minEnemyHealth = 1;
         int enemyAttackDamage = 50;
 
-        // player
+        // Player
         int playerHealth = 150;
         int maxPlayerHealth = 150;
         int playerAttackDamage = 40;
         int playerRunChanceWithoutHit = 90; // Percentage
         String playerName = "";
 
-        // health potions
+        // Health potions
         int numOfHealthPotions = 3;
         int healthPotionHealAmount = 25;
         int healthPotionDropChance = 20; // Percentage
@@ -38,7 +41,7 @@ public class AdventureGame {
         while(true) {
             String confirmation = in.next();
             if(confirmation.toLowerCase().equals("no")) {
-                endGame(in, playerName);
+                endGame(in, playerName, score);
             } else if(confirmation.toLowerCase().equals("yes")) {
                 System.out.println("\nGoodluck " + playerName + " you'll need it!!!");
                 System.out.println(divider + "\n");
@@ -50,7 +53,7 @@ public class AdventureGame {
     
         GAME:
         while(running) {
-            int enemyHealth = rand.nextInt(maxEnemyHealth);
+            int enemyHealth = rand.nextInt((maxEnemyHealth - minEnemyHealth) + 1) + minEnemyHealth;
             String enemy = enemies[rand.nextInt(enemies.length)];
 
             System.out.println("\t" + enemy + " has appeared!\n");
@@ -78,6 +81,7 @@ public class AdventureGame {
                     }
                     if(enemyHealth <= 0) {
                         System.out.println("\t" + enemy + " was defeated!");
+                        score++;
                     }
                 } else if(input.equals("2")) {
                     if(numOfHealthPotions > 0) {
@@ -95,7 +99,7 @@ public class AdventureGame {
                             System.out.println("\tYou are at max health!\n");
                         }
                     } else {
-                        System.out.println("\tYou have no health potions left! Defeat enemies for a chance to get one.");
+                        System.out.println("\tYou have no health potions left! Defeat enemies for a chance to get one.\n");
                     }
                 } else if(input.equals("3")) {
                     if(rand.nextInt(PERCENT) < playerRunChanceWithoutHit) {
@@ -118,7 +122,7 @@ public class AdventureGame {
             }
             if(playerHealth <= 0) {
                 System.out.println("\tYou have died!\n");
-                endGame(in, playerName);
+                endGame(in, playerName, score);
             }
             
             System.out.println("---------------------------------------------");
@@ -146,17 +150,18 @@ public class AdventureGame {
                 System.out.println("\tYou continue on your adventure!\n");
             } else if(userInput.equals("2")) {
                 System.out.println("\tYou exit the cave, successful from your adventures!\n");
-                endGame(in, playerName);
+                endGame(in, playerName, score);
             }
 
         }
-            endGame(in, playerName);
+            endGame(in, playerName, score);
 
     }
 
-    public static void endGame(Scanner in, String playerName) {
+    public static void endGame(Scanner in, String playerName, int score) {
         System.out.println("###############");
-        System.out.println("  THANKS FOR PLAYING! " + playerName);
+        System.out.println("\tTHANKS FOR PLAYING! " + playerName);
+        System.out.println("\tYou earned a score of: " + score);
         System.out.println("###############");
         in.close();
         System.exit(0);
