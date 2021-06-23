@@ -8,7 +8,8 @@ public class AdventureGame {
         Scanner in = new Scanner(System.in);
         Random rand = new Random();
         final int PERCENT = 100;
-        int score = 0;
+        int score = 0; // enemies killed
+        int turn = 0; // turn counter
         
         // Enemies
         String[] enemies = {"Skeleton", "Zombie", "Warrior", "Assassin", "Vampire", "Dragon", "Werewolf",
@@ -41,7 +42,7 @@ public class AdventureGame {
         while(true) {
             String confirmation = in.next();
             if(confirmation.toLowerCase().equals("no")) {
-                endGame(in, playerName, score);
+                endGame(in, playerName, score, turn);
             } else if(confirmation.toLowerCase().equals("yes")) {
                 System.out.println("\nGoodluck " + playerName + " you'll need it!!!");
                 System.out.println(divider + "\n");
@@ -59,6 +60,8 @@ public class AdventureGame {
             System.out.println("\t" + enemy + " has appeared!\n");
 
             while(enemyHealth > 0) {
+                turn++;
+
                 System.out.println("\tYour HP: " + playerHealth);
                 System.out.println("\t" + enemy + "'s HP: " + enemyHealth);
                 System.out.println("\n\tWhat would you like to do?");
@@ -122,7 +125,7 @@ public class AdventureGame {
             }
             if(playerHealth <= 0) {
                 System.out.println("\tYou have died!\n");
-                endGame(in, playerName, score);
+                endGame(in, playerName, score, turn);
             }
             
             System.out.println("---------------------------------------------");
@@ -150,18 +153,19 @@ public class AdventureGame {
                 System.out.println("\tYou continue on your adventure!\n");
             } else if(userInput.equals("2")) {
                 System.out.println("\tYou exit the cave, successful from your adventures!\n");
-                endGame(in, playerName, score);
+                endGame(in, playerName, score, turn);
             }
 
         }
-            endGame(in, playerName, score);
+            endGame(in, playerName, score, turn);
 
     }
 
-    public static void endGame(Scanner in, String playerName, int score) {
+    public static void endGame(Scanner in, String playerName, int score, int turn) {
         System.out.println("###############");
         System.out.println("\tTHANKS FOR PLAYING! " + playerName);
         System.out.println("\tYou earned a score of: " + score);
+        System.out.println("\tTurn: " + turn);
         System.out.println("###############");
         in.close();
         System.exit(0);
