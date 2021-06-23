@@ -51,7 +51,7 @@ public class AdventureGame {
                 System.out.println("Invalid Command!");  
             }
         }
-    
+
         GAME:
         while(running) {
             int enemyHealth = rand.nextInt((maxEnemyHealth - minEnemyHealth) + 1) + minEnemyHealth;
@@ -95,9 +95,9 @@ public class AdventureGame {
                                 playerHealth += healthPotionHealAmount;
                             }
                             numOfHealthPotions--;
-                            System.out.println("\tYou drink a health potion, you have healed for " + healthPotionHealAmount + ".\n");
+                            System.out.println("\tYou drink a health potion, you have healed for " + healthPotionHealAmount + ".");
                             System.out.println("\tYou now have " + playerHealth + " HP.");
-                            System.out.println("\tYou have  " + numOfHealthPotions + " health potions left."); 
+                            System.out.println("\tYou have " + numOfHealthPotions + " health potions left.\n"); 
                         } else {
                             System.out.println("\tYou are at max health!\n");
                         }
