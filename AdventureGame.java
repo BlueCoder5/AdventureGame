@@ -25,12 +25,47 @@ public class AdventureGame {
         int playerRunChanceWithoutHit = 90; // Percentage, run chance without being hit by the enemy
         String playerName = ""; // placeholder for the player's name
 
+        // Items
+        // Sword
+        int swordDrop;
+        // Iron Sword
+        boolean hasIronSword = false;
+        int ironSwordAttack = 50;
+        int ironSwordDropChance = 25;
+
+        // Gold Sword
+        boolean hasGoldSword = false;
+        int goldSwordAttack = 75;
+        int goldSwordDropChance = 10;
+
+        // Diamond Sword
+        boolean hasDiamondSword = false;
+        int diamondSwordAttack = 95;
+        int diamondSwordDropChance = 2;
+        
+        // Armor
+        int armorDrop;
+        // Iron Armor
+        boolean hasIronArmor = false;
+        int ironArmorDefense = 5; // Percentage damage reduction
+        int ironArmorDropChance = 25;
+
+        // Gold Armor 
+        boolean hasGoldArmor = false;
+        int goldArmorDefense = 20;
+        int goldArmorDropChance = 10;
+
+        // Diamond Armor
+        boolean hasDiamondArmor = false;
+        int diamondArmorDefense = 50;
+        int diamondArmorDropChance = 2;
+
         // Health potions
         int numOfHealthPotions = 3; // number of health potions the player has
         int healthPotionHealAmount = 25; // health potion heal amount
         int healthPotionDropChance = 20; // Percentage, health potion drop chance after defeating an enemy
 
-        //boss
+        // Boss
         String[] bosses = {"Three-Headed Dragon", "Giant Alien"}; // array of boss names
         int maxBossHealth = 300; // boss maximum health
         int minBossHealth = 80; // boss minimum health
@@ -85,8 +120,16 @@ public class AdventureGame {
                         int damageDealt = rand.nextInt(playerAttackDamage); // random int for the damage dealt to the boss
                         int damageTaken = rand.nextInt(bossAttackDamage); // random int for the damage dealth to the player
 
-                        bossHealth -= playerAttackDamage; 
-                        playerHealth -= bossAttackDamage;
+                        if(hasDiamondSword == true) {
+                            damageDealt = diamondSwordAttack;
+                        } else if(hasGoldSword == true) {
+                            damageDealt = goldSwordAttack;
+                        } else if(hasIronSword == true) {
+                            damageDealt = ironSwordAttack;
+                        }
+
+                        bossHealth -= damageDealt; 
+                        playerHealth -= damageTaken;
 
                         System.out.println("\tYou strike the " + bossName + " for " + damageDealt + " damage.");
                         System.out.println("\tYou receive " + damageTaken + " damage from the " + bossName + "\n");
@@ -144,6 +187,14 @@ public class AdventureGame {
                 if(input.equals("1")) { // attack
                     int damageDealt = rand.nextInt(playerAttackDamage); // random int for damage dealth by the player
                     int damageTaken = rand.nextInt(enemyAttackDamage); // random int for the damage the player receives
+                    
+                    if(hasDiamondSword == true) {
+                        damageDealt = diamondSwordAttack;
+                    } else if(hasGoldSword == true) {
+                        damageDealt = goldSwordAttack;
+                    } else if(hasIronSword == true) {
+                        damageDealt = ironSwordAttack;
+                    }
 
                     enemyHealth -= damageDealt;
                     playerHealth -= damageTaken;
@@ -198,7 +249,7 @@ public class AdventureGame {
                 endGame(in, playerName, score, turn, bossScore);
             }
             
-            System.out.println("---------------------------------------------");
+            System.out.println(divider);
             if(rand.nextInt(PERCENT) < healthPotionDropChance) { // determines if the enemy, once defeated, drops a health potion
                 numOfHealthPotions++; // increases the number of health potions that the player has
                 System.out.println("\tThe enemy dropped a health potion!");
@@ -207,7 +258,42 @@ public class AdventureGame {
             
             System.out.println("\tYou have " + playerHealth + " HP left."); 
             
-            System.out.println("---------------------------------------------");
+            swordDrop = rand.nextInt(PERCENT);
+            if(hasDiamondSword == false) {
+                if(hasGoldSword == false) {
+                    if(hasIronSword == false) {
+                        if(swordDrop < diamondSwordDropChance) {
+                            hasDiamondSword = true;
+                            System.out.println(divider);
+                            System.out.println("\tYou got a diamond sword!");
+                        } else if(swordDrop < goldSwordDropChance) {
+                            hasGoldSword = true;
+                            System.out.println(divider);
+                            System.out.println("\tYou got a gold sword!");
+                        } else if(swordDrop < ironSwordDropChance) {
+                            hasIronSword = true;
+                            System.out.println(divider);
+                            System.out.println("\tYou got an iron sword!");
+                        } 
+                    } else if(swordDrop < diamondSwordDropChance) {
+                        hasDiamondSword = true;
+                        System.out.println(divider);
+                            System.out.println("\tYou got a diamond sword!");
+                    } else if(swordDrop < goldSwordDropChance) {
+                        hasGoldSword = true;
+                        System.out.println(divider);
+                            System.out.println("\tYou got a gold sword!");
+                    }
+                } else if(swordDrop < diamondSwordDropChance) {
+                    hasDiamondSword = true;
+                    System.out.println(divider);
+                    System.out.println("\tYou got a diamond sword!");
+                }
+
+            } 
+            
+
+            System.out.println(divider);
             System.out.println("\tWhat would you like to do?");
             System.out.println("\t1. Continue fighting");
             System.out.println("\t2. Exit Cave");
@@ -235,7 +321,7 @@ public class AdventureGame {
         System.out.println("###############");
         System.out.println("\tTHANKS FOR PLAYING! " + playerName);
         System.out.println("\tYou earned a score of: " + score);
-        System.out.println("\tYBosses defeated " + bossScore);
+        System.out.println("\tBosses defeated " + bossScore);
         System.out.println("\tTurn: " + turn);
         System.out.println("###############");
         in.close();
