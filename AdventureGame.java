@@ -28,6 +28,7 @@ public class AdventureGame {
         // Items
         // Sword
         int swordDrop;
+
         // Iron Sword
         boolean hasIronSword = false;
         int ironSwordAttack = 50;
@@ -45,6 +46,7 @@ public class AdventureGame {
         
         // Armor
         int armorDrop;
+
         // Iron Armor
         boolean hasIronArmor = false;
         int ironArmorDefense = 5; // Percentage damage reduction
@@ -128,6 +130,14 @@ public class AdventureGame {
                             damageDealt = ironSwordAttack;
                         }
 
+                        if(hasDiamondArmor == true) {
+                            damageTaken = (damageTaken * (diamondArmorDefense + PERCENT)) / PERCENT;
+                        } else if(hasGoldArmor == true) {
+                            damageTaken = (damageTaken * (goldArmorDefense + PERCENT)) / PERCENT;
+                        } else if(hasIronArmor == true) {
+                            damageTaken = (damageTaken * (ironArmorDefense + PERCENT)) / PERCENT;
+                        }
+
                         bossHealth -= damageDealt; 
                         playerHealth -= damageTaken;
 
@@ -194,6 +204,14 @@ public class AdventureGame {
                         damageDealt = goldSwordAttack;
                     } else if(hasIronSword == true) {
                         damageDealt = ironSwordAttack;
+                    }
+
+                    if(hasDiamondArmor == true) {
+                        damageTaken = (damageTaken * (diamondArmorDefense + PERCENT)) / PERCENT;
+                    } else if(hasGoldArmor == true) {
+                        damageTaken = (damageTaken * (goldArmorDefense + PERCENT)) / PERCENT;
+                    } else if(hasIronArmor == true) {
+                        damageTaken = (damageTaken * (ironArmorDefense + PERCENT)) / PERCENT;
                     }
 
                     enemyHealth -= damageDealt;
@@ -278,21 +296,52 @@ public class AdventureGame {
                     } else if(swordDrop < diamondSwordDropChance) {
                         hasDiamondSword = true;
                         System.out.println(divider);
-                            System.out.println("\tYou got a diamond sword!");
+                        System.out.println("\tYou got a diamond sword!");
                     } else if(swordDrop < goldSwordDropChance) {
                         hasGoldSword = true;
                         System.out.println(divider);
-                            System.out.println("\tYou got a gold sword!");
+                        System.out.println("\tYou got a gold sword!");
                     }
                 } else if(swordDrop < diamondSwordDropChance) {
                     hasDiamondSword = true;
                     System.out.println(divider);
                     System.out.println("\tYou got a diamond sword!");
                 }
+            } 
 
+            armorDrop = rand.nextInt(PERCENT);
+            if(hasDiamondArmor == false) {
+                if(hasGoldArmor == false) {
+                    if(hasIronArmor == false) {
+                        if(armorDrop < diamondArmorDropChance) {
+                            hasDiamondArmor = true;
+                            System.out.println(divider);
+                            System.out.println("\tYou got diamond armor!");
+                        } else if(armorDrop < goldArmorDropChance) {
+                            hasGoldArmor = true;
+                            System.out.println(divider);
+                            System.out.println("\tYou got gold armor!");
+                        } else if(armorDrop < ironArmorDropChance) {
+                            hasIronArmor = true;
+                            System.out.println(divider);
+                            System.out.println("\tYou got iron armor!");
+                        } 
+                    } else if(armorDrop < diamondArmorDropChance) {
+                        hasDiamondArmor = true;
+                        System.out.println(divider);
+                        System.out.println("\tYou got diamond armor!");
+                    } else if(armorDrop < goldArmorDropChance) {
+                        hasGoldArmor = true;
+                        System.out.println(divider);
+                        System.out.println("\tYou got gold armor!");
+                    }
+                } else if(armorDrop < diamondArmorDropChance) {
+                    hasDiamondArmor = true;
+                    System.out.println(divider);
+                    System.out.println("\tYou got diamond armor!");
+                }
             } 
             
-
             System.out.println(divider);
             System.out.println("\tWhat would you like to do?");
             System.out.println("\t1. Continue fighting");
